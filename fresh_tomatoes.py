@@ -70,7 +70,7 @@ main_page_head = '''
         $(document).on('click', '.movie-tile', function (event) {
             $('.description').hide();
             $(this).children('.description').show();
-            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',

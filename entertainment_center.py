@@ -1,4 +1,5 @@
 import media, fresh_tomatoes, urllib2, json
+from xml.etree import ElementTree
 
 moviesCollection = {'tt0114709':media.Movie(), 'tt2015381':media.Movie(), 'tt0091042':media.Movie(), 'tt0082971':media.Movie(), 'tt1049413':media.Movie(), 'tt0076759':media.Movie()}
 
@@ -10,10 +11,25 @@ for x in moviesCollection:
 	movie_data = json.load(response)
 	moviesCollection[x].title = movie_data["Title"]
 	moviesCollection[x].storyline = movie_data["Plot"]
-	moviesCollection[x].poster = str(movie_data["Poster"])
+	moviesCollection[x].poster_image_url = str(movie_data["Poster"])
 	moviesCollection[x].imdb_url = "http://www.imdb.com/title/{0}/".format(x)
 	
-	
+for x in moviesCollection:
+	titleWords = str(moviesCollection[x].title).split()
+	#print titleWords
+	query=""
+	for x in titleWords:
+		#print x
+		query = query+"-" + x
+	query=query[1:]
+	#print query
+	req = urllib2.Request('http://api.traileraddict.com/?film='.format(query))
+	response = urllib2.urlopen(req)
+	#print response.readlines()
+	tree = ElementTree.fromstring(str(response))
+	root = tree.getroot()
+	print root[0][1]
+
 
 # toy_story = media.Movie("Toy Story", "A story about a boy and his toys that come to life", 
 						# "http://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
@@ -51,5 +67,6 @@ for x in moviesCollection:
 							 # "http://www.imdb.com/title/tt0076759/?ref_=nv_sr_2")
 for x in moviesCollection:
 	movies.append(moviesCollection[x])
+	#print(type(moviesCollection[x].poster))
 #movies = [toy_story, gotg, ferrisBueller, indianaJones, up, starWars]
 fresh_tomatoes.open_movies_page(movies)
