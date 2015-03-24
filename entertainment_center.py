@@ -2,70 +2,43 @@ import media, fresh_tomatoes, urllib2, json
 from xml.dom import minidom
 import trailerLookUp
 
+'''Entertainment_center holds the initial data of IMDB_IDs for favorite movies. Those IDs are then used to query the omdbapi and retrieve 
+	the necessary data except the trailer url. I then use the title plus 'trailer' to query youtube's api for the first result. The dict of
+	movies is then placed in a list that is passed to fresh_tomatoes
+'''
 moviesCollection = {'tt0114709':media.Movie(), 'tt2015381':media.Movie(), 'tt0091042':media.Movie(), 'tt0082971':media.Movie(), 'tt1049413':media.Movie(), 'tt0076759':media.Movie()}
 
 movies=[]
 
-for x in moviesCollection:
-	req = urllib2.Request('http://www.omdbapi.com/?i={0}&plot=short&r=json'.format(x))
+for imdbID in moviesCollection:
+	req = urllib2.Request('http://www.omdbapi.com/?i={0}&plot=short&r=json'.format(imdbID))
 	response = urllib2.urlopen(req)
 	movie_data = json.load(response)
-	moviesCollection[x].title = movie_data["Title"]
-	moviesCollection[x].storyline = movie_data["Plot"]
-	moviesCollection[x].poster_image_url = str(movie_data["Poster"])
-	moviesCollection[x].imdb_url = "http://www.imdb.com/title/{0}/".format(x)
+	moviesCollection[imdbID].title = movie_data["Title"]
+	moviesCollection[imdbID].storyline = movie_data["Plot"]
+	moviesCollection[imdbID].poster_image_url = str(movie_data["Poster"])
+	moviesCollection[imdbID].imdb_url = "http://www.imdb.com/title/{0}/".format(imdbID)
 	
-for x in moviesCollection:
-	titleWords = str(moviesCollection[x].title).split()
+for imdbID in moviesCollection:
+	titleWords = str(moviesCollection[imdbID].title).split()
 	query=""
+	#Build the query for youtube by splitting the words of the title, adding +, and tacking on the trailer keyword to pull the proper results. 
 	for word in titleWords:
 		if('-' in titleWords):
 			titleWords.remove('-')
                         
 	for word in titleWords:
 		query = query+"+" + word
-	query=query[1:]
+	query=query + "trailer"
+	
+	#trailer lookup will return a list of video id results. Right now trailerLookUp limits to one result returned to keep things simple.
 	trailerID = trailerLookUp.trailer(query)
-	moviesCollection[x].trailer_youtube_url = "https://youtube.come/watch?v={0}".format(trailerID[0])
-	print moviesCollection[x].trailer_youtube_url
+	
+	#The youtube url is then just the basic url plus the id returned from trailerlookup
+	moviesCollection[imdbID].trailer_youtube_url = "https://youtube.come/watch?v={0}".format(trailerID[0])
 
-
-# toy_story = media.Movie("Toy Story", "A story about a boy and his toys that come to life", 
-						# "http://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
-						# "https://www.youtube.com/watch?v=vwyZH85NQC4",
-						# "http://www.imdb.com/title/tt0114709/")
-
-
-# gotg = media.Movie("Guardians of the Galaxy",
-					 # "A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe.",
-					 # "http://upload.wikimedia.org/wikipedia/en/8/8f/GOTG-poster.jpg",
-					 # "https://www.youtube.com/watch?v=B16Bo47KS2g",
-					 # "http://www.imdb.com/title/tt2015381/?ref_=nv_sr_1")
-
-# ferrisBueller = media.Movie("Ferris Bueller's Day Off",
-							# "A high school wise guy is determined to have a day off from school, despite what the principal thinks of that.",
-							# "http://upload.wikimedia.org/wikipedia/en/9/9b/Ferris_Bueller%27s_Day_Off.jpg",
-							# "https://www.youtube.com/watch?v=R-P6p86px6U",
-							# "http://www.imdb.com/title/tt0091042/?ref_=nv_sr_1")
-
-# indianaJones = media.Movie("Indiana Jones and the Raiders of the Lost Ark", 
-						   # "Archaeologist and adventurer Indiana Jones is hired by the US government to find the Ark of the Covenant before the Nazis.",
-						   # "http://upload.wikimedia.org/wikipedia/en/4/4b/Raiders.jpg",
-						   # "www.youtube.com/watch?v=gz4crpFaW4M",
-						   # "http://www.imdb.com/title/tt0082971/?ref_=fn_al_tt_1")
-
-# up = media.Movie("Up", 
-				 # "To avoid being taken away to a nursing home, an old widower tries to fly his home to Paradise Falls, South America, along with a boy scout who accidentally lifted off with him.",
-				 # "http://upload.wikimedia.org/wikipedia/en/0/05/Up_%282009_film%29.jpg",
-				 # "https://www.youtube.com/watch?v=pkqzFUhGPJg",
-				 # "http://www.imdb.com/title/tt1049413/?ref_=fn_al_tt_1")
-
-# starWars = media.Movie("Star Wars: Episode IV - A New Hope", "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire's world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.",
-							 # "http://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg",
-							 # "https://www.youtube.com/watch?v=9gvqpFbRKtQ",
-							 # "http://www.imdb.com/title/tt0076759/?ref_=nv_sr_2")
-for x in moviesCollection:
-	movies.append(moviesCollection[x])
-	moviesCollection[x].trailer_youtube_url
+for imdbID in moviesCollection:
+	movies.append(moviesCollection[imdbID])
+	moviesCollection[imdbID].trailer_youtube_url
 	
 fresh_tomatoes.open_movies_page(movies)

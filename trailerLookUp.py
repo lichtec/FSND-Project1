@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#Basically the search example from Google Developer portal with some modifications to limit the search and the results.
 
 from apiclient.discovery import build
 from apiclient.errors import HttpError
@@ -21,7 +22,7 @@ def youtube_search(options):
   # query term.
   print options
   search_response = youtube.search().list(
-    q=options+'+trailer',
+    q=options,
     part="id,snippet",
     maxResults=1,
 	type="video"

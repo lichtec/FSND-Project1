@@ -3,6 +3,7 @@ import os
 import re
 
 # Styles and scripting for the page
+#Added a style for description and simple JS to handle hiding and showing the additional info found in the description section upon click
 main_page_head = '''
 <head>
     <meta charset="utf-8">
@@ -126,6 +127,7 @@ main_page_content = '''
 '''
 
 # A single movie entry html template
+#Added to template to get the additional info in the description
 movie_tile_content = '''
 <div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
@@ -147,6 +149,7 @@ def create_movie_tiles_content(movies):
         trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
 
         # Append the tile for the movie with its content filled in
+		#Added the storyline and imdb_url to add to the description
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
