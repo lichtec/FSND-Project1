@@ -29,11 +29,11 @@ for imdbID in moviesCollection:
                         
 	for word in titleWords:
 		query = query+"+" + word
-	query=query + "trailer"
+	query=query + "+trailer"
 	
 	#trailer lookup will return a list of video id results. Right now trailerLookUp limits to one result returned to keep things simple.
 	trailerID = trailerLookUp.trailer(query)
-	
+	print trailerID
 	#The youtube url is then just the basic url plus the id returned from trailerlookup
 	moviesCollection[imdbID].trailer_youtube_url = "https://youtube.come/watch?v={0}".format(trailerID[0])
 

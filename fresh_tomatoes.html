@@ -37,7 +37,7 @@
         }
         .scale-media {
             padding-bottom: 56.25%;
-            position: relative;
+            position: absolute;
         }
         .scale-media iframe {
             border: none;
@@ -52,10 +52,68 @@
             margin-bottom: 50px;
             padding-top: 50px;
         }
+		
+		.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.slide {
+  background: transparent url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/feature-gradient-transparent.png') center center no-repeat;
+  background-size: cover;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.active-slide {
+    display: block;
+}
+.slider-nav {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.arrow-prev {
+  margin-right: 45px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-top: 9px;
+}
+
+.arrow-next {
+  margin-left: 45px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-top: 9px;
+}
+
+.slider-dots {
+  list-style: none;
+  display: inline-block;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.slider-dots li {
+  color: #bbbcbc;
+  display: inline;
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.slider-dots li.active-dot {
+  color: #363636;
+}
+
     </style>
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
-        $('.description').hide();
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
@@ -63,9 +121,7 @@
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
-            $('.description').hide();
-            $(this).children('.description').show();
-            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
+=           var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
@@ -109,63 +165,109 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="slider">
       
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="xioILbwDlEg" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTU4NTczODkwM15BMl5BanBnXkFtZTcwMzEyMTIyMw@@._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Star Wars: Episode IV - A New Hope</h2>
-    <div class="description">
-      <div class="storyline">Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire's world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt0076759/">IMDB Page</a></div>
-    </div>
+<div class="slide active-slide">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="xioILbwDlEg" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMTU4NTczODkwM15BMl5BanBnXkFtZTcwMzEyMTIyMw@@._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Star Wars: Episode IV - A New Hope</h2>
+				<div class="description">
+					<div class="storyline">Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire's world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt0076759/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="K-X2XzKqBiE" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTg2MTUxODY4NV5BMl5BanBnXkFtZTcwNzQ5NzU2OQ@@._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Ferris Bueller's Day Off</h2>
-    <div class="description">
-      <div class="storyline">A high school wise guy is determined to have a day off from school, despite what the principal thinks of that.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt0091042/">IMDB Page</a></div>
-    </div>
+<div class="slide ">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="K-X2XzKqBiE" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMTg2MTUxODY4NV5BMl5BanBnXkFtZTcwNzQ5NzU2OQ@@._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Ferris Bueller's Day Off</h2>
+				<div class="description">
+					<div class="storyline">A high school wise guy is determined to have a day off from school, despite what the principal thinks of that.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt0091042/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="KYz2wyBy3kc" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTgwMjI4MzU5N15BMl5BanBnXkFtZTcwMTMyNTk3OA@@._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Toy Story</h2>
-    <div class="description">
-      <div class="storyline">A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt0114709/">IMDB Page</a></div>
-    </div>
+<div class="slide ">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="KYz2wyBy3kc" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMTgwMjI4MzU5N15BMl5BanBnXkFtZTcwMTMyNTk3OA@@._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Toy Story</h2>
+				<div class="description">
+					<div class="storyline">A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt0114709/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="pkqzFUhGPJg" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Up</h2>
-    <div class="description">
-      <div class="storyline">To avoid being taken away to a nursing home, an old widower tries to fly his home to Paradise Falls, South America, along with a boy scout who accidentally lifted off with him.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt1049413/">IMDB Page</a></div>
-    </div>
+<div class="slide ">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="pkqzFUhGPJg" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Up</h2>
+				<div class="description">
+					<div class="storyline">To avoid being taken away to a nursing home, an old widower tries to fly his home to Paradise Falls, South America, along with a boy scout who accidentally lifted off with him.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt1049413/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="XkkzKHCx154" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMjA0ODEzMTc1Nl5BMl5BanBnXkFtZTcwODM2MjAxNA@@._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Raiders of the Lost Ark</h2>
-    <div class="description">
-      <div class="storyline">Archaeologist and adventurer Indiana Jones is hired by the US government to find the Ark of the Covenant before the Nazis.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt0082971/">IMDB Page</a></div>
-    </div>
+<div class="slide ">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="XkkzKHCx154" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMjA0ODEzMTc1Nl5BMl5BanBnXkFtZTcwODM2MjAxNA@@._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Raiders of the Lost Ark</h2>
+				<div class="description">
+					<div class="storyline">Archaeologist and adventurer Indiana Jones is hired by the US government to find the Ark of the Covenant before the Nazis.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt0082971/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="d96cjJhvlMA" data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_SX300.jpg" width="220" height="342">
-    <h2 class="title">Guardians of the Galaxy</h2>
-    <div class="description">
-      <div class="storyline">A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe.</div>
-      <div class="imdb_url"><a href="http://www.imdb.com/title/tt2015381/">IMDB Page</a></div>
-    </div>
+<div class="slide ">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="d96cjJhvlMA" data-toggle="modal" data-target="#trailer">
+				<img src="http://ia.media-imdb.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_SX300.jpg" width="220" height="342">
+				<h2 class="title">Guardians of the Galaxy</h2>
+				<div class="description">
+					<div class="storyline">A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe.</div>
+					<div class="imdb_url"><a href="http://www.imdb.com/title/tt2015381/">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 
     </div>
+	<div class="slider-nav">
+      <a href="#" class="arrow-prev"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-prev.png"></a>
+      <ul class="slider-dots">
+        <li class="dot active-dot">&bull;</li>
+        <li class="dot">&bull;</li>
+        <li class="dot">&bull;</li>
+        <li class="dot">&bull;</li>
+      </ul>
+      <a href="#" class="arrow-next"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-next.png"></a>
+    </div> 
   </body>
   <script src="app.js"></script>
 </html>

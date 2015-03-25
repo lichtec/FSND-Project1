@@ -43,7 +43,7 @@ main_page_head = '''
         }
         .scale-media {
             padding-bottom: 56.25%;
-            position: relative;
+            position: absolute;
         }
         .scale-media iframe {
             border: none;
@@ -58,10 +58,68 @@ main_page_head = '''
             margin-bottom: 50px;
             padding-top: 50px;
         }
+		
+		.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.slide {
+  background: transparent url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/feature-gradient-transparent.png') center center no-repeat;
+  background-size: cover;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.active-slide {
+    display: block;
+}
+.slider-nav {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.arrow-prev {
+  margin-right: 45px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-top: 9px;
+}
+
+.arrow-next {
+  margin-left: 45px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-top: 9px;
+}
+
+.slider-dots {
+  list-style: none;
+  display: inline-block;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.slider-dots li {
+  color: #bbbcbc;
+  display: inline;
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.slider-dots li.active-dot {
+  color: #363636;
+}
+
     </style>
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
-        $('.description').hide();
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
@@ -69,9 +127,7 @@ main_page_head = '''
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
-            $('.description').hide();
-            $(this).children('.description').show();
-            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
+=           var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
@@ -118,9 +174,19 @@ main_page_content = '''
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="slider">
       {movie_tiles}
     </div>
+	<div class="slider-nav">
+      <a href="#" class="arrow-prev"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-prev.png"></a>
+      <ul class="slider-dots">
+        <li class="dot active-dot">&bull;</li>
+        <li class="dot">&bull;</li>
+        <li class="dot">&bull;</li>
+        <li class="dot">&bull;</li>
+      </ul>
+      <a href="#" class="arrow-next"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-next.png"></a>
+    </div> 
   </body>
   <script src="app.js"></script>
 </html>
@@ -129,13 +195,19 @@ main_page_content = '''
 # A single movie entry html template
 #Added to template to get the additional info in the description
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2 class="title">{movie_title}</h2>
-    <div class="description">
-      <div class="storyline">{movie_storyline}</div>
-      <div class="imdb_url"><a href="{imdb_url}">IMDB Page</a></div>
-    </div>
+<div class="slide {additional_class}">
+	<div class="container">
+		<div class="row">
+			<div class="text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+				<img src="{poster_image_url}" width="220" height="342">
+				<h2 class="title">{movie_title}</h2>
+				<div class="description">
+					<div class="storyline">{movie_storyline}</div>
+					<div class="imdb_url"><a href="{imdb_url}">IMDB Page</a></div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 '''
 
@@ -143,20 +215,28 @@ def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''
     for movie in movies:
+		if(movies.index(movie) == 0):
+			additional_classes="active-slide"
+		else:
+			additional_classes=""
+
+		#print additional_classes
         # Extract the youtube ID from the url
-        youtube_id_match = re.search(r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
-        youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
-        trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
+        
+		youtube_id_match = re.search(r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
+		youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
+		trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
 
         # Append the tile for the movie with its content filled in
 		#Added the storyline and imdb_url to add to the description
-        content += movie_tile_content.format(
-            movie_title=movie.title,
-            poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id,
-            movie_storyline = movie.storyline,
-            imdb_url=movie.imdb_url
-        )
+		content += movie_tile_content.format(
+			additional_class=additional_classes,
+			movie_title=movie.title,
+			poster_image_url=movie.poster_image_url,
+			trailer_youtube_id=trailer_youtube_id,
+			movie_storyline = movie.storyline,
+			imdb_url=movie.imdb_url
+		)
     return content
 
 def open_movies_page(movies):
