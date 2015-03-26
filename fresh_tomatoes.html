@@ -12,7 +12,7 @@
         body {
             padding-top: 80px;
         }
-        #trailer .modal-dialog {
+        #trailer.modal-dialog {
             margin-top: 200px;
             width: 640px;
             height: 480px;
@@ -49,94 +49,68 @@
             background-color: white;
         }
         .description {
-            margin-bottom: 50px;
-            padding-top: 50px;
+            margin-bottom: 20px;
+            padding-top: 20px;
         }
 		
-		.slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-bottom: 1px solid #ddd;
-}
+		    .slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-bottom: 1px solid #ddd;
+        }
 
-.slide {
-  background: transparent url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/feature-gradient-transparent.png') center center no-repeat;
-  background-size: cover;
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+        .slide {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 75%;
+        }
 
-.active-slide {
-    display: block;
-}
-.slider-nav {
-  text-align: center;
-  margin-top: 20px;
-}
+        .active-slide {
+            display: block;
+        }
+        
+        .slider-nav {
+          text-align: center;
+          margin-top: 20px;
+        }
 
-.arrow-prev {
-  margin-right: 45px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-top: 9px;
-}
+        .arrow-prev {
+          margin-right: 45px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 9px;
+        }
 
-.arrow-next {
-  margin-left: 45px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-top: 9px;
-}
+        .arrow-next {
+          margin-left: 45px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 9px;
+        }
 
-.slider-dots {
-  list-style: none;
-  display: inline-block;
-  padding-left: 0;
-  margin-bottom: 0;
-}
+        .slider-dots {
+          list-style: none;
+          display: inline-block;
+          padding-left: 0;
+          margin-bottom: 0;
+        }
 
-.slider-dots li {
-  color: #bbbcbc;
-  display: inline;
-  font-size: 30px;
-  margin-right: 5px;
-}
+        .slider-dots li {
+          color: #bbbcbc;
+          display: inline;
+          font-size: 30px;
+          margin-right: 5px;
+        }
 
-.slider-dots li.active-dot {
-  color: #363636;
-}
+        .slider-dots li.active-dot {
+          color: #363636;
+        }
 
     </style>
-    <script type="text/javascript" charset="utf-8">
-        // Pause the video when the modal is closed
-        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
-            // Remove the src so the player itself gets removed, as this is the only
-            // reliable way to ensure the video stops playing in IE
-            $("#trailer-video-container").empty();
-        });
-        // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.movie-tile', function (event) {
-=           var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
-            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
-            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
-              'id': 'trailer-video',
-              'type': 'text-html',
-              'src': sourceUrl,
-              'frameborder': 0
-            }));
-        });
-        // Animate in the movies when the page loads
-        $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
-          });
-        });
-    </script>
 </head>
 
 <!DOCTYPE html>
@@ -262,6 +236,8 @@
       <a href="#" class="arrow-prev"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-prev.png"></a>
       <ul class="slider-dots">
         <li class="dot active-dot">&bull;</li>
+        <li class="dot">&bull;</li>
+        <li class="dot">&bull;</li>
         <li class="dot">&bull;</li>
         <li class="dot">&bull;</li>
         <li class="dot">&bull;</li>

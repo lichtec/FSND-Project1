@@ -29,16 +29,16 @@ for imdbID in moviesCollection:
                         
 	for word in titleWords:
 		query = query+"+" + word
-	query=query + "+trailer"
+	query=query[1:] + "+trailer"
 	
 	#trailer lookup will return a list of video id results. Right now trailerLookUp limits to one result returned to keep things simple.
 	trailerID = trailerLookUp.trailer(query)
-	print trailerID
+	#print trailerID
 	#The youtube url is then just the basic url plus the id returned from trailerlookup
-	moviesCollection[imdbID].trailer_youtube_url = "https://youtube.come/watch?v={0}".format(trailerID[0])
+	moviesCollection[imdbID].trailer_youtube_url = "https://youtube.com/watch?v={0}".format(trailerID[0])
 
 for imdbID in moviesCollection:
 	movies.append(moviesCollection[imdbID])
-	moviesCollection[imdbID].trailer_youtube_url
+	print moviesCollection[imdbID].trailer_youtube_url
 	
 fresh_tomatoes.open_movies_page(movies)
