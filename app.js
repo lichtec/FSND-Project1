@@ -42,8 +42,9 @@ var main = function () {
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.active-slide', function (event) {
-            alert('test');
+            //alert('test');
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
+			//alert($(this).attr('class'));
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',

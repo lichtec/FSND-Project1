@@ -35,7 +35,7 @@ for imdbID in moviesCollection:
 	trailerID = trailerLookUp.trailer(query)
 	#print trailerID
 	#The youtube url is then just the basic url plus the id returned from trailerlookup
-	moviesCollection[imdbID].trailer_youtube_url = "https://youtube.com/watch?v={0}".format(trailerID[0])
+	moviesCollection[imdbID].trailer_youtube_url = trailerID[0]
 
 for imdbID in moviesCollection:
 	movies.append(moviesCollection[imdbID])

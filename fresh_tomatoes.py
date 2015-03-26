@@ -43,7 +43,7 @@ main_page_head = '''
         }
         .scale-media {
             padding-bottom: 56.25%;
-            position: absolute;
+            position: relative;
         }
         .scale-media iframe {
             border: none;
@@ -171,7 +171,7 @@ main_page_content = '''
 # A single movie entry html template
 #Added to template to get the additional info in the description
 movie_tile_content = '''
-<div class="slide {additional_class}">
+<div class="slide {additional_class}" data-trailer-youtube-id="{trailer_youtube_id}">
 	<div class="container">
 		<div class="row">
 			<div class="text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
@@ -199,17 +199,16 @@ def create_movie_tiles_content(movies):
 		#print additional_classes
         # Extract the youtube ID from the url
         
-		youtube_id_match = re.search(r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
-		youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
-		trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
+		trailer_youtube_id = movie.trailer_youtube_url
+		print trailer_youtube_id
 
         # Append the tile for the movie with its content filled in
 		#Added the storyline and imdb_url to add to the description
 		content += movie_tile_content.format(
 			additional_class=additional_classes,
+			trailer_youtube_id=trailer_youtube_id,
 			movie_title=movie.title,
 			poster_image_url=movie.poster_image_url,
-			trailer_youtube_id=trailer_youtube_id,
 			movie_storyline = movie.storyline,
 			imdb_url=movie.imdb_url
 		)
