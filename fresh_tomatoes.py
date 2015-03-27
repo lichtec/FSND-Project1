@@ -3,7 +3,8 @@ import os
 import re
 
 # Styles and scripting for the page
-#Added a style for description and simple JS to handle hiding and showing the additional info found in the description section upon click
+# Added a style for description and simple JS to handle the slide based carousel.
+# The basis for the slide based carousel came from a CodeAcademy project I did with lots of customization to make it work here
 main_page_head = '''
 <head>
     <meta charset="utf-8">
