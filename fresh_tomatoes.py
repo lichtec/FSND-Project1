@@ -62,7 +62,8 @@ main_page_head = '''
 		    .slider {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 90%;
+            margin-bottom: 20px;
             border-bottom: 1px solid #ddd;
         }
 
@@ -72,7 +73,7 @@ main_page_head = '''
             top: 0;
             left: 0;
             width: 100%;
-            height: 75%;
+            height: 100%;
         }
 
         .active-slide {
@@ -200,7 +201,7 @@ def create_movie_tiles_content(movies):
         # Extract the youtube ID from the url
         
 		trailer_youtube_id = movie.trailer_youtube_url
-		print trailer_youtube_id
+		#print trailer_youtube_id
 
         # Append the tile for the movie with its content filled in
 		#Added the storyline and imdb_url to add to the description

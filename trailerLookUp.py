@@ -20,7 +20,7 @@ def youtube_search(options):
 
   # Call the search.list method to retrieve results matching the specified
   # query term.
-  print options
+  #print options
   search_response = youtube.search().list(
     q=options,
     part="id,snippet",

@@ -39,6 +39,6 @@ for imdbID in moviesCollection:
 
 for imdbID in moviesCollection:
 	movies.append(moviesCollection[imdbID])
-	print moviesCollection[imdbID].trailer_youtube_url
+	#print moviesCollection[imdbID].trailer_youtube_url
 	
 fresh_tomatoes.open_movies_page(movies)
